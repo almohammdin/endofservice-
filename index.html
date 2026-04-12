@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<title>إدارة مخصص نهاية الخدمة - نطاق عمل لاتخاذ قرار مجلس الإدارة</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --navy: #0f1f3d;
+        --navy-mid: #1a2f57;
+        --gold: #c9a84c;
+        --gold-light: #f0d98a;
+        --gold-pale: #fdf6e3;
+        --gray-bg: #f4f5f8;
+        --text: #1a1a2e;
+        --text-muted: #4a4a6a;
+        --border: #dde2ec;
+        --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'IBM Plex Sans Arabic', sans-serif;
+        background: var(--gray-bg);
+        color: var(--text);
+        line-height: 1.85;
+        padding: 40px 20px 60px;
+    }
+
+    .page {
+        max-width: 920px;
+        margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+        background: var(--navy);
+        border-radius: 14px 14px 0 0;
+        padding: 36px 44px 28px;
+        position: relative;
+        overflow: hidden;
+    }
+    .header::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 18px,
+            rgba(201,168,76,0.04) 18px,
+            rgba(201,168,76,0.04) 19px
+        );
+    }
+    .header-tag {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        position: relative;
+    }
+    .header h1 {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--white);
+        line-height: 1.6;
+        position: relative;
+        margin-bottom: 6px;
+    }
+    .header h1 span {
+        display: block;
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(255,255,255,0.7);
+        margin-top: 4px;
+    }
+    .header-sub {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(255,255,255,0.55);
+        position: relative;
+    }
+    .gold-bar {
+        height: 3px;
+        background: linear-gradient(90deg, var(--gold), var(--gold-light), transparent);
+        border-radius: 0;
+    }
+
+    /* Body card */
+    .body-card {
+        background: var(--white);
+        border-radius: 0 0 14px 14px;
+        padding: 40px 44px;
+        border: 1px solid var(--border);
+        border-top: none;
+    }
+
+    /* Risk indicators */
+    .risk-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 14px;
+    }
+    .risk-card {
+        background: var(--navy);
+        border-radius: 10px;
+        padding: 18px 16px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .risk-card::after {
+        content: '';
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        height: 3px;
+        background: var(--gold);
+    }
+    .risk-card .num {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--gold-light);
+        line-height: 1.2;
+        margin-bottom: 4px;
+    }
+    .risk-card .label {
+        font-size: 12.5px;
+        color: rgba(255,255,255,0.6);
+        font-weight: 400;
+        line-height: 1.5;
+    }
+
+    /* Growth alert */
+    .growth-alert {
+        background: #fff3cd;
+        border: 1px solid #f0d98a;
+        border-right: 4px solid var(--gold);
+        border-radius: 0 8px 8px 0;
+        padding: 12px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #5a3e00;
+        margin-bottom: 18px;
+    }
+
+    /* Scope note */
+    .scope-note {
+        background: var(--gold-pale);
+        border-right: 4px solid var(--gold);
+        border-radius: 0 8px 8px 0;
+        padding: 16px 20px;
+        font-size: 15px;
+        color: var(--text);
+        margin-bottom: 36px;
+        line-height: 1.8;
+    }
+
+    /* Sections */
+    .section {
+        margin-bottom: 32px;
+    }
+    .section-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--navy);
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .section-title .icon {
+        width: 4px;
+        height: 20px;
+        background: var(--gold);
+        border-radius: 2px;
+        flex-shrink: 0;
+    }
+
+    .section p {
+        font-size: 15px;
+        color: var(--text-muted);
+        line-height: 1.9;
+    }
+
+    /* Bullet lists inside sections */
+    .goal-list {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0;
+    }
+    .goal-list li {
+        font-size: 15px;
+        color: var(--text-muted);
+        padding: 6px 0 6px 0;
+        display: flex;
+        gap: 10px;
+        line-height: 1.7;
+        border-bottom: 1px dashed var(--border);
+    }
+    .goal-list li:last-child { border-bottom: none; }
+    .goal-list li::before {
+        content: '◆';
+        color: var(--gold);
+        font-size: 9px;
+        margin-top: 5px;
+        flex-shrink: 0;
+    }
+    .goal-sublabel {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin: 14px 0 6px;
+    }
+
+    /* Phase cards */
+    .phase-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 32px;
+    }
+    .phase-card {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .phase-header {
+        background: var(--navy-mid);
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .phase-num {
+        background: var(--gold);
+        color: var(--navy);
+        font-size: 12px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+    }
+    .phase-title-text {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--white);
+    }
+    .phase-body {
+        padding: 14px 16px;
+        background: var(--white);
+    }
+    .phase-body ul {
+        list-style: none;
+        padding: 0;
+    }
+    .phase-body ul li {
+        font-size: 13px;
+        color: var(--text-muted);
+        padding: 5px 0;
+        border-bottom: 1px dashed var(--border);
+        line-height: 1.7;
+        display: flex;
+        gap: 8px;
+    }
+    .phase-body ul li:last-child { border-bottom: none; }
+    .phase-body ul li::before {
+        content: '◆';
+        color: var(--gold);
+        font-size: 8px;
+        margin-top: 6px;
+        flex-shrink: 0;
+    }
+
+    /* Outputs */
+    .outputs-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 14px;
+    }
+    .output-item {
+        background: var(--gray-bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px 14px;
+        font-size: 13.5px;
+        color: var(--text);
+        font-weight: 500;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .output-item .dot {
+        width: 8px;
+        height: 8px;
+        background: var(--gold);
+        border-radius: 50%;
+    }
+
+    /* Outcome box */
+    .outcome-box {
+        background: var(--gray-bg);
+        border: 1px solid var(--border);
+        border-right: 4px solid var(--navy);
+        border-radius: 0 10px 10px 0;
+        padding: 22px 24px;
+        margin-bottom: 32px;
+    }
+    .outcome-box .outcome-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--navy);
+        margin-bottom: 14px;
+    }
+    .outcome-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .outcome-item {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 14px;
+        font-size: 13.5px;
+        color: var(--text);
+        font-weight: 500;
+        line-height: 1.6;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    .outcome-item .check {
+        color: var(--gold);
+        font-size: 14px;
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+
+    /* Decision box */
+    .decision-box {
+        background: var(--navy);
+        border-radius: 10px;
+        padding: 22px 24px;
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        margin-top: 32px;
+    }
+    .decision-icon {
+        background: var(--gold);
+        color: var(--navy);
+        font-size: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .decision-text .title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--gold-light);
+        margin-bottom: 6px;
+    }
+    .decision-text p {
+        font-size: 14px;
+        color: rgba(255,255,255,0.75);
+        line-height: 1.8;
+    }
+
+    /* Divider */
+    .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 28px 0;
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 28px;
+        opacity: 0.7;
+    }
+
+    @media (max-width: 680px) {
+        .risk-grid, .phase-grid, .outputs-grid, .outcome-grid { grid-template-columns: 1fr; }
+        .header, .body-card { padding: 24px 20px; }
+    }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Header -->
+<div class="header">
+    <div class="header-tag">وثيقة عمل موجهة لمجلس الإدارة · للاعتماد</div>
+    <h1>
+        إدارة مخصص نهاية الخدمة
+        <span>نطاق عمل لاتخاذ قرار مجلس الإدارة</span>
+    </h1>
+</div>
+<div class="gold-bar"></div>
+
+<div class="body-card">
+
+    <!-- خلفية الموضوع -->
+    <div class="section">
+        <div class="section-title"><span class="icon"></span> خلفية الموضوع</div>
+        <p>
+            خلال مراجعة المجلس للميزانيات التفصيلية، تبيّن أن رصيد مخصص نهاية الخدمة يتصاعد بوتيرة ملحوظة دون أن يقابله تمويل مستقل مخصص لهذا الالتزام، واستناداً إلى ما ورد من إقرار الإدارة في صفحة (16) من مسودة القوائم المالية لعام 2024م بشأن تبسيط احتساب المخصص وكونه غير ممول، رأى المجلس ضرورة الوقوف على حجم هذا الالتزام بدقة وتقييم مخاطره ووضع سياسة واضحة للتعامل معه قبل إقفال السنة المالية في 30 يونيو 2026.
+        </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- حجم الالتزام -->
+    <div class="section">
+        <div class="section-title"><span class="icon"></span> حجم الالتزام بالنسبة للشركة</div>
+        <div class="risk-grid">
+            <div class="risk-card">
+                <div class="num">~18M</div>
+                <div class="label">رصيد المخصص الحالي</div>
+            </div>
+            <div class="risk-card">
+                <div class="num">نحو 19%</div>
+                <div class="label">من إجمالي إيرادات الشركة</div>
+            </div>
+            <div class="risk-card">
+                <div class="num">نحو 2.4×</div>
+                <div class="label">ضعف صافي الربح السنوي</div>
+            </div>
+            <div class="risk-card">
+                <div class="num">~3.1M</div>
+                <div class="label">نمو الرصيد خلال آخر سنة</div>
+            </div>
+            <div class="risk-card">
+                <div class="num">نحو 41%</div>
+                <div class="label">من الربح تذهب لخدمة الالتزام سنوياً</div>
+            </div>
+            <div class="risk-card">
+                <div class="num">صفر</div>
+                <div class="label">تمويل مستقل مخصص للالتزام</div>
+            </div>
+        </div>
+        <div class="growth-alert">
+            ⚠ الالتزام مرشح للاستمرار في النمو في حال عدم اتخاذ قرار قبل الإقفال.
+        </div>
+        <p>
+            هذه الأرقام تضع مخصص نهاية الخدمة في مرتبة <strong>التزام مادي جوهري</strong> وليس بند محاسبي روتيني، مما يتطلب معالجة هيكلية.
+        </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- المشكلة -->
+    <div class="section">
+        <div class="section-title"><span class="icon"></span> المشكلة</div>
+        <p>
+            يبلغ رصيد المخصص ما يقارب <strong>18 مليون ريال</strong>، ونما خلال العام الأخير بنحو 3.1M ريال، في ظل غياب تمويل مستقل واضح مرتبط بهذا الالتزام. الأصل الاستثماري القائم لا يرتبط رسمياً بالمخصص من حيث السيولة والمخاطر وطبيعة الالتزام، مما يعني أن الشركة قد تواجه ضغطاً تدفقياً فعلياً عند الاستحقاق.
+        </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- هدف الطرح -->
+    <div class="section">
+        <div class="section-title"><span class="icon"></span> هدف الطرح</div>
+        <p style="margin-bottom: 10px; font-size:15px; color: var(--text-muted);">يهدف هذا الطرح إلى تمكين المجلس من:</p>
+        <ul class="goal-list">
+            <li>اعتماد رقم أقرب للواقع قبل إقفال السنة المالية</li>
+            <li>فهم المخاطر المرتبطة بالالتزام وتأثيره على التدفقات النقدية</li>
+            <li>اتخاذ قرار واضح بشأن تمويله وإدارته مستقبلاً</li>
+        </ul>
+        <div class="goal-sublabel">وذلك من خلال:</div>
+        <ul class="goal-list">
+            <li>قياس الالتزام الفعلي بمنهجية تتوافق مع معيار IAS 19</li>
+            <li>تقييم مخاطر السيولة والتركز الديموغرافي</li>
+            <li>اقتراح سياسة تمويل وحوكمة مستدامة</li>
+        </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- خطة التنفيذ -->
+    <div class="section">
+        <div class="section-title"><span class="icon"></span> خطة التنفيذ</div>
+        <div class="phase-grid">
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-num">01</span>
+                    <span class="phase-title-text">التشخيص والوضع الراهن</span>
+                </div>
+                <div class="phase-body">
+                    <ul>
+                        <li>مراجعة حركة المخصص خلال آخر 5 سنوات</li>
+                        <li>مقارنة الالتزام الدفتري بتقديرات الالتزام الفعلي</li>
+                        <li>المقارنة المرجعية (Benchmarking) مع شركات تعليمية مقارنة</li>
+                        <li>جمع البيانات الديموغرافية والمالية للموظفين</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-num">02</span>
+                    <span class="phase-title-text">التحليل الاكتواري والمالي</span>
+                </div>
+                <div class="phase-body">
+                    <ul>
+                        <li>احتساب الالتزام الحقيقي بمنهجيات معتمدة</li>
+                        <li>تحليل التدفقات النقدية المتوقعة عند الاستحقاق</li>
+                        <li>تقييم مخاطر السيولة وتركز التقاعد</li>
+                        <li>تقييم ملاءمة الأصل الاستثماري الحالي</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="phase-card">
+                <div class="phase-header">
+                    <span class="phase-num">03</span>
+                    <span class="phase-title-text">التوصيات والسياسات</span>
+                </div>
+                <div class="phase-body">
+                    <ul>
+                        <li>تصميم سياسة التمويل السنوي للمخصص</li>
+                        <li>اقتراح إطار حوكمة واضح للصلاحيات</li>
+                        <li>عرض سيناريوهات مستقبلية مع توصيات</li>
+                        <li>حلول نظامية لإدارة نمو الالتزام مستقبلاً</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ملاحظة النطاق -->
+    <div class="scope-note">
+        تشمل الدراسة اقتراح حلول عملية ونظامية لضبط نمو المخصص مستقبلاً، منها: معالجة حالات الخدمة المطوّلة، ودراسة خيارات المغادرة الاختيارية، وتحسين هيكلة العقود، كل ذلك بما يتوافق مع الأنظمة العمالية المعمول بها.
+    </div>
+
+    <!-- المخرجات -->
+    <div class="section">
+        <div class="section-title"><span class="icon"></span> المخرجات الأساسية</div>
+        <div class="outputs-grid">
+            <div class="output-item">
+                <div class="dot"></div>
+                تقرير مالي واكتواري شامل يضم كافة التحليلات والنتائج
+            </div>
+            <div class="output-item">
+                <div class="dot"></div>
+                وثيقة سياسة التمويل والحوكمة · مسودة جاهزة لاعتماد المجلس
+            </div>
+            <div class="output-item">
+                <div class="dot"></div>
+                مذكرة موجزة للمجلس: الوضع الراهن، المخاطر، الخيارات، التوصية
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- النتيجة المتوقعة قبل الإقفال -->
+    <div class="section">
+        <div class="section-title"><span class="icon"></span> النتيجة المتوقعة قبل الإقفال</div>
+        <div class="outcome-box">
+            <div class="outcome-title">بنهاية الفترة، سيتمكن المجلس من:</div>
+            <div class="outcome-grid">
+                <div class="outcome-item">
+                    <span class="check">✦</span>
+                    اعتماد رقم مبني على تحليل واضح
+                </div>
+                <div class="outcome-item">
+                    <span class="check">✦</span>
+                    فهم أثر الالتزام على التدفقات النقدية
+                </div>
+                <div class="outcome-item">
+                    <span class="check">✦</span>
+                    اتخاذ قرار بشأن آلية تمويله
+                </div>
+                <div class="outcome-item">
+                    <span class="check">✦</span>
+                    بدء تطبيق سياسة واضحة اعتباراً من السنة القادمة
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- القرار المطلوب -->
+    <div class="decision-box">
+        <div class="decision-icon">✦</div>
+        <div class="decision-text">
+            <div class="title">القرار المطلوب من المجلس</div>
+            <p>الموافقة على نطاق العمل المرجعي (TOR) المقترح، وتفويض الإدارة باتخاذ الإجراءات اللازمة لإتمام الدراسة خلال الفترة المحددة، بما يشمل التعاقد مع الجهة المنفذة وتوفير البيانات المطلوبة.</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    وثيقة داخلية · مُعدّة لاجتماع مجلس الإدارة · مدارس الأقصى
+</div>
+
+</div>
+</body>
+</html>
